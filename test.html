@@ -48,10 +48,13 @@
 <script>
 document.body.on("click", '.circle', function(e){
 	console.log(this,e);
-}).on('click', function(e){
-	console.log('body',e);
+	// e.stopPropagation();
+	e.stopImmediatePropagation();
+}, false)
+document.body.on('click', function(e){
+	console.log(this,e);
+	e.stopPropagation();
 });
-
 console.log(document.querySelector('.circle').closest('body'));
 </script>
 </body>

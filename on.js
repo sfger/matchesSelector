@@ -1,12 +1,7 @@
 (function(HTMLElement){
 	if(!HTMLElement) return false;
 	var proto = HTMLElement.prototype;
-	var matches = proto.matches 
-				|| proto.matchesSelector
-				|| proto.webkitMatchesSelector
-				|| proto.mozMatchesSelector
-				|| proto.msMatchesSelector
-				|| proto.oMatchesSelector;
+	var matches = proto.matches;
 	if(!matches) return false;
 	proto.on = function(type, selector, fn, capture){
 		var proxyElement = this;
@@ -17,6 +12,7 @@
 		}
 		capture = !!capture;
 		var handler = function(e){
+			var e = e || window.event;
 			var target = e.target||e.srcElement;
 			if(selector){
 				if(!matches.call(target, selector)){
@@ -25,13 +21,19 @@
 			}else{
 				target = proxyElement;
 			}
-			target && fn.call(target, e);
+			if(target){
+				if(!e.preventDefault){
+					e.preventDefault = function(){ e.returnValue = false; };
+					e.stopPropagation = function(){ e.cancelBubble = false; };
+				}
+				fn.call(target, e);
+			}
 		};
 		if(window.addEventListener){
-			proxyElement.addEventListener(type, handler, capture);
+			proxyElement.addEventListener(type, handler, false);
 		}else if(window.attachEvent){
 			proxyElement.attachEvent("on"+type, handler);
-		} 
+		}
 		return this;
 	};
 })(window.HTMLElement||window.Element);
