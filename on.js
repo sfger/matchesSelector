@@ -1,12 +1,13 @@
 (function(HTMLElement){
 	if(!HTMLElement) return false;
 	var proto = HTMLElement.prototype;
-	var matchesSelector = proto.matchesSelector
-						|| proto.webkitMatchesSelector
-						|| proto.mozMatchesSelector
-						|| proto.msMatchesSelector
-						|| proto.oMatchesSelector;
-	if(!matchesSelector) return false;
+	var matches = proto.matches 
+				|| proto.matchesSelector
+				|| proto.webkitMatchesSelector
+				|| proto.mozMatchesSelector
+				|| proto.msMatchesSelector
+				|| proto.oMatchesSelector;
+	if(!matches) return false;
 	proto.on = function(type, selector, fn, capture){
 		var proxyElement = this;
 		if(selector.apply){
@@ -18,7 +19,7 @@
 		var handler = function(e){
 			var target = e.target||e.srcElement;
 			if(selector){
-				if(!matchesSelector.call(target, selector)){
+				if(!matches.call(target, selector)){
 					target = null;
 				}
 			}else{
