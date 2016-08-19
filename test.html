@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no, email=no" />
+<meta name="screen-orientation" content="portrait">
+<meta name="full-screen" content="yes">
+<meta name="browsermode" content="application">
+<meta name="x5-orientation" content="portrait">
+<meta name="x5-fullscreen" content="true">
+<meta name="x5-page-mode" content="app">
+<meta name="author" content="" />
+<meta name="revisit-after" content="1 days" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<style type="text/css" media="all">
+*,*:before,*:after,*::before,*::after{box-sizing:border-box;}
+.circle{
+	width:100px;height:100px;line-height:100px;
+	position:relative;z-index:1;text-align:center;
+}
+.circle:before{
+	content:"";
+	position:absolute;z-index:-1;
+	border-left:100px dotted red;
+	border-top:100px dotted red;
+}
+@media screen and (min-width:0px){
+	.circle{border-radius:50%;background:red;}
+	.circle:before{content:normal;}
+}
+</style>
+</head>
+<body>
+<div id="page">
+	<div class="circle">test</div>
+</div>
+<script src="./matchesSelector.js"></script>
+<script src="./on.js"></script>
+<script>
+document.body.on("click", '.circle', function(e){
+	console.log(this,e);
+}).on('click', function(e){
+	console.log('body',e);
+});
+</script>
+</body>
+</html>
