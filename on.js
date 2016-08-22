@@ -26,7 +26,11 @@
 					e.preventDefault = function(){ e.returnValue = false; };
 					e.stopPropagation = function(){ e.cancelBubble = false; };
 				}
-				fn.call(target, e);
+				var ret = fn.call(target, e);
+				if(false===ret){
+					e.preventDefault();
+					e.stopPropagation();
+				}
 			}
 		};
 		if(window.addEventListener){
