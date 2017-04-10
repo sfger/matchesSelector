@@ -114,12 +114,16 @@
 		return this;
 	};
 	proto.off = function(type){
+		var parse = get_event_type_tag(type);
 		var list = this.__event_list__;
 		if(!(list && list.length)) return this;
 		var ret = [];
 		for(var i=0,il=list.length; i<il; i++){
 			var item = list[i];
-			if(item.type!==type) ret.push(item);
+			if(item.type!==parse.type) ret.push(item);
+			else if(parse.type){
+				if(!type_match(parse.typeTag, item.typeTag)) ret.push(item);
+			}
 		}
 		this.__event_list__ = ret;
 		return this;

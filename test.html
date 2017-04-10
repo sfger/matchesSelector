@@ -51,14 +51,14 @@
 <script src="./closest.js"></script>
 <script src="./on.js"></script>
 <script>
-document.querySelector('.circle').on('click.test', function(e){
+document.querySelector('.circle').on('click.test.miss', function(e){
 	console.log(0,this,e);
 	//e.preventDefault();
 	//e.stopImmediatePropagation();
 });
-document.querySelector('.circle').on('click.list', function(e){
+document.querySelector('.circle').on('click.test.list', function(e){
 	console.log('00',this,e);
-	this.off('click');
+	this.off('click.miss');
 	return false;
 });
 
