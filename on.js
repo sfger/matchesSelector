@@ -57,7 +57,7 @@
 		return '.' + arr.join('.') + '.';
 	};
 	var type_match = function(a, b){ return b.indexOf(a)>-1; };
-	proto.on = function(type, selector, fn){
+	proto.on = window.Window.prototype.on = function(type, selector, fn){
 		var proxyElement = this;
 		if(selector.apply){
 			fn       = selector;
@@ -113,7 +113,7 @@
 		}
 		return this;
 	};
-	proto.off = function(type){
+	proto.off = window.Window.prototype.off = function(type){
 		var parse = get_event_type_tag(type);
 		var list = this.__event_list__;
 		if(!(list && list.length)) return this;
@@ -140,7 +140,7 @@
 		}
 		return e;
 	};
-	proto.trigger = function(type, e){
+	proto.trigger = window.Window.prototype.trigger = function(type, e){
 		var parse = get_event_type_tag(type);
 		var list = this.__event_list__;
 		if(list.length){

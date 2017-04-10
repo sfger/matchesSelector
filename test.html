@@ -51,6 +51,13 @@
 <script src="./closest.js"></script>
 <script src="./on.js"></script>
 <script>
+window.on('resize', function(e){
+	console.log('list');
+});
+window.on('resize', function(e){
+	console.log('test');
+});
+window.trigger('resize');
 document.querySelector('.circle').on('click.test.miss', function(e){
 	console.log(0,this,e);
 	//e.preventDefault();
