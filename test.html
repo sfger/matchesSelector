@@ -23,6 +23,7 @@
 <style type="text/css" media="all">
 *,*:before,*:after,*::before,*::after{box-sizing:border-box;}
 .circle{
+	display:block;
 	width:100px;height:100px;line-height:100px;
 	position:relative;z-index:1;text-align:center;
 }
@@ -40,22 +41,40 @@
 </head>
 <body>
 <div id="page">
-	<div class="circle">test</div>
+	<a href="http://wwww.baidu.com/" class="circle">
+		<div>
+			test
+		</div>
+	</a>
 </div>
 <script src="./matches.js"></script>
 <script src="./closest.js"></script>
 <script src="./on.js"></script>
 <script>
+document.querySelector('.circle').on('click.test', function(e){
+	console.log(0,this,e);
+	//e.preventDefault();
+	//e.stopImmediatePropagation();
+});
+document.querySelector('.circle').on('click.list', function(e){
+	console.log('00',this,e);
+	this.off('click');
+	return false;
+});
+
+/*
 document.body.on("click", '.circle', function(e){
-	console.log(this,e);
+	console.log(1,this,e);
 	// e.stopPropagation();
-	e.stopImmediatePropagation();
-}, false);
+	// e.stopImmediatePropagation();
+});
+*/
+
 document.body.on('click', function(e){
-	console.log(this,e);
+	console.log(2,this,e);
 	e.stopPropagation();
 });
-console.log(document.querySelector('.circle').closest('body'));
+// console.log(document.body.closest('body'));
 </script>
 </body>
 </html>
