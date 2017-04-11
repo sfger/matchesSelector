@@ -148,8 +148,8 @@
 					if(e._stopImmediatePropagation_) return this;
 				}
 			}
-		}else if(this[parse.type]){
-			this[parse.type]();
+		// }else if(this[parse.type]){
+		// 	this[parse.type]();
 		}
 		return this;
 	};//}}}
