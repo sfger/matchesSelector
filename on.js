@@ -41,23 +41,34 @@
 		detail: null
 	});
 })();// }}}
-
-(function(HTMLElement){
+(function(HTMLElement, Window, HTMLDocument){
 	if(!HTMLElement) return false;
 	var proto = HTMLElement.prototype;
 	var matches = proto.matches;
 	if(!matches) return false;
-	var get_event_type_tag = function(type){
+	var parse_event_type = function(type){//{{{
 		var typeTag = type.split('.');
 		var ret = {type:typeTag.shift()};
 		if(typeTag.length) ret.typeTag = '.' + typeTag.sort(function(a,b){ return a>b; }).join('.') + '.';
 		return ret;
-	};
-	var _join = function(arr){
-		return '.' + arr.join('.') + '.';
-	};
+	};//}}}
 	var type_match = function(a, b){ return b.indexOf(a)>-1; };
-	proto.on = window.Window.prototype.on = document.on = function(type, selector, fn){
+	var get_event = function(type, op){//{{{
+		var e = new window.CustomEvent(type, op);
+		return _set_event(e);
+	};//}}}
+	var _set_event = function(e){//{{{
+		if(!e.preventDefault){
+			e.preventDefault = function(){ e.returnValue = false; };
+			e.stopPropagation = function(){ e.cancelBubble = true; };
+		}
+		e.stopImmediatePropagation = function(){
+			e._stopImmediatePropagation_ = true;
+			e.stopPropagation();
+		}
+		return e;
+	};//}}}
+	proto.on = Window.prototype.on = HTMLDocument.prototype.on = function(type, selector, fn){//{{{
 		var proxyElement = this;
 		if(selector.apply){
 			fn       = selector;
@@ -74,14 +85,7 @@
 				target = proxyElement;
 			}
 			if(target){
-				if(!e.preventDefault){
-					e.preventDefault = function(){ e.returnValue = false; };
-					e.stopPropagation = function(){ e.cancelBubble = true; };
-				}
-				e.stopImmediatePropagation = function(){
-					e._stopImmediatePropagation_ = true;
-					e.stopPropagation();
-				}
+				_set_event(e);
 				var ret = fn.call(target, e);
 				if(false===ret){
 					e.preventDefault();
@@ -92,7 +96,7 @@
 		};
 		var type_list = type.split(' ');
 		for(var i=0,il=type_list.length; i<il; i++){
-			var parse = get_event_type_tag(type_list[i]);
+			var parse = parse_event_type(type_list[i]);
 			type = parse.type;
 			if(!proxyElement.__event_list__){
 				if(window.addEventListener){
@@ -112,9 +116,9 @@
 			proxyElement.__event_list__.push(l);
 		}
 		return this;
-	};
-	proto.off = window.Window.prototype.off = document.off = function(type){
-		var parse = get_event_type_tag(type);
+	};//}}}
+	proto.off = Window.prototype.off = HTMLDocument.prototype.off = function(type){//{{{
+		var parse = parse_event_type(type);
 		var list = this.__event_list__;
 		if(!(list && list.length)) return this;
 		var ret = [];
@@ -127,23 +131,11 @@
 		}
 		this.__event_list__ = ret;
 		return this;
-	};
-	var get_event = function(type, op){
-		var e = new window.CustomEvent(type, op);
-		if(!e.preventDefault){
-			e.preventDefault = function(){ e.returnValue = false; };
-			e.stopPropagation = function(){ e.cancelBubble = true; };
-		}
-		e.stopImmediatePropagation = function(){
-			e._stopImmediatePropagation_ = true;
-			e.stopPropagation();
-		}
-		return e;
-	};
-	proto.trigger = window.Window.prototype.trigger = document.trigger = function(type, e){
-		var parse = get_event_type_tag(type);
+	};//}}}
+	proto.trigger = Window.prototype.trigger = HTMLDocument.prototype.trigger = function(type, e){//{{{
+		var parse = parse_event_type(type);
 		var list = this.__event_list__;
-		if(list.length){
+		if(list && list.length){
 			for(var i=0,il=list.length; i<il; i++){
 				var item = list[i];
 				if(item.type===parse.type){
@@ -156,7 +148,9 @@
 					if(e._stopImmediatePropagation_) return this;
 				}
 			}
-		}else this[parse.type]();
+		}else if(this[parse.type]){
+			this[parse.type]();
+		}
 		return this;
-	};
-})(window.Element);
+	};//}}}
+})(window.HTMLElement||window.Element, window.Window, window.HTMLDocument || window.Document);

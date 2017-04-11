@@ -51,6 +51,7 @@
 <script src="./closest.js"></script>
 <script src="./on.js"></script>
 <script>
+/*
 document.on('resize', function(e){
 	console.log('list');
 });
@@ -58,6 +59,8 @@ document.on('resize', function(e){
 	console.log('test');
 });
 document.trigger('resize');
+*/
+/*
 document.querySelector('.circle').on('click.test.miss', function(e){
 	console.log(0,this,e);
 	//e.preventDefault();
@@ -68,13 +71,15 @@ document.querySelector('.circle').on('click.test.list', function(e){
 	this.off('click.miss');
 	return false;
 });
+*/
 
-/*
-document.body.on("click", '.circle', function(e){
+document.body.children[0].on("click", '.circle', function(e){
 	console.log(1,this,e);
-	// e.stopPropagation();
-	// e.stopImmediatePropagation();
+	//e.stopPropagation();
+	//e.stopImmediatePropagation();
+	return false;
 });
+/*
 */
 
 document.body.on('click', function(e){
