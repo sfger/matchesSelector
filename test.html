@@ -60,7 +60,6 @@ document.on('resize', function(e){
 });
 document.trigger('resize');
 */
-/*
 document.querySelector('.circle').on('click.test.miss', function(e){
 	console.log(0,this,e);
 	//e.preventDefault();
@@ -68,24 +67,25 @@ document.querySelector('.circle').on('click.test.miss', function(e){
 });
 document.querySelector('.circle').on('click.test.list', function(e){
 	console.log('00',this,e);
-	this.off('click.miss');
+	this.off('click.test.miss');
 	return false;
 });
+/*
 */
 
+/*
 document.body.children[0].on("click", '.circle', function(e){
 	console.log(1,this,e);
 	//e.stopPropagation();
 	//e.stopImmediatePropagation();
 	return false;
 });
-/*
-*/
 
 document.body.on('click', function(e){
 	console.log(2,this,e);
 	e.stopPropagation();
 });
+*/
 // console.log(document.body.closest('body'));
 </script>
 </body>

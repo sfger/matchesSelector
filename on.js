@@ -124,9 +124,12 @@
 		var ret = [];
 		for(var i=0,il=list.length; i<il; i++){
 			var item = list[i];
-			if(item.type!==parse.type) ret.push(item);
-			else if(parse.type){
-				if(!type_match(parse.typeTag, item.typeTag)) ret.push(item);
+			if(item.type===parse.type){
+				if(parse.typeTag && !type_match(parse.typeTag, item.typeTag)){
+					ret.push(item);
+				}
+			}else{
+				ret.push(item);
 			}
 		}
 		this.__event_list__ = ret;
