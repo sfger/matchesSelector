@@ -23,29 +23,29 @@
 <style type="text/css" media="all">
 *,*:before,*:after,*::before,*::after{box-sizing:border-box;}
 .circle{
-	display:block;
-	width:100px;height:100px;line-height:100px;
-	position:relative;z-index:1;text-align:center;
+  display:block;
+  width:100px;height:100px;line-height:100px;
+  position:relative;z-index:1;text-align:center;
 }
 .circle:before{
-	content:"";
-	position:absolute;z-index:-1;
-	border-left:100px dotted red;
-	border-top:100px dotted red;
+  content:"";
+  position:absolute;z-index:-1;
+  border-left:100px dotted red;
+  border-top:100px dotted red;
 }
 @media screen and (min-width:0px){
-	.circle{border-radius:50%;background:red;}
-	.circle:before{content:normal;}
+  .circle{border-radius:50%;background:red;}
+  .circle:before{content:normal;}
 }
 </style>
 </head>
 <body>
 <div id="page">
-	<a href="http://wwww.baidu.com/" class="circle">
-		<div>
-			test
-		</div>
-	</a>
+  <a href="http://wwww.baidu.com/" class="circle">
+    <div>
+      test
+    </div>
+  </a>
 </div>
 <script src="./matches.js"></script>
 <script src="./closest.js"></script>
@@ -53,37 +53,37 @@
 <script>
 /*
 document.on('resize', function(e){
-	console.log('list');
+  console.log('list');
 });
 document.on('resize', function(e){
-	console.log('test');
+  console.log('test');
 });
 document.trigger('resize');
 */
 document.querySelector('.circle').on('click.test.miss', function(e){
-	console.log(0,this,e);
-	//e.preventDefault();
-	//e.stopImmediatePropagation();
+  console.log(0,this,e);
+  //e.preventDefault();
+  //e.stopImmediatePropagation();
 });
 document.querySelector('.circle').on('click.test.list', function(e){
-	console.log('00',this,e);
-	this.off('click.test.miss');
-	return false;
+  console.log('00',this,e);
+  this.off('click.test.miss');
+  return false;
 });
 /*
 */
 
 /*
 document.body.children[0].on("click", '.circle', function(e){
-	console.log(1,this,e);
-	//e.stopPropagation();
-	//e.stopImmediatePropagation();
-	return false;
+  console.log(1,this,e);
+  //e.stopPropagation();
+  //e.stopImmediatePropagation();
+  return false;
 });
 
 document.body.on('click', function(e){
-	console.log(2,this,e);
-	e.stopPropagation();
+  console.log(2,this,e);
+  e.stopPropagation();
 });
 */
 // console.log(document.body.closest('body'));
